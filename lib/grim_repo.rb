@@ -1,5 +1,6 @@
 require "grim_repo/version"
 
 module GrimRepo
-  # Your code goes here...
+  autoload :Client, 'grim_repo/client'
+  autoload :User,   'grim_repo/user'
 end

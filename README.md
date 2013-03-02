@@ -52,3 +52,15 @@ We can also fetch the details of other individual users.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+### Running the Tests
+
+Run the test suite with:
+
+    $ rspec
+
+There tests in `spec/features` hit the live API and capture the results using VCR. If you want to run the tests against the live API you'll need to configure some credentials using environment variables:
+
+    $ export GRIMREPO_TEST_USERNAME=username
+    $ export GRIMREPO_TEST_PASSWORD=password
+    $ rspec
