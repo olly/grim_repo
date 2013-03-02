@@ -24,10 +24,7 @@ module FeatureSetup
 
     let(:client) { GrimRepo::Client.new(username, password) }
 
-    around do |example|
-      VCR.use_cassette(self.class.metadata[:cassette]) do
-        example.run
-      end
-    end
+    before(:all) { VCR.insert_cassette(self.class.metadata[:cassette]) }
+    after(:all)  { VCR.eject_cassette }
   end
 end

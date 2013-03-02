@@ -1,4 +1,5 @@
 require 'faraday_middleware'
+require 'grim_repo/client/status_handler'
 
 module GrimRepo
   class Client
@@ -18,6 +19,17 @@ module GrimRepo
       User.new(data)
     end
 
+    # Fetches a user by login name.
+    #
+    # @param login [String] a GitHub username
+    # @return [User, nil]
+    def users(login)
+      data = get("/users/#{login}")
+      User.new(data)
+    rescue NotFound
+      nil
+    end
+
     private
 
     attr_reader :username, :password
@@ -27,6 +39,7 @@ module GrimRepo
         faraday.basic_auth(username, password)
 
         faraday.use FaradayMiddleware::ParseJson
+        faraday.use StatusHandler
 
         faraday.adapter Faraday.default_adapter
       end
