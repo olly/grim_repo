@@ -4,7 +4,8 @@ require 'grim_repo/user'
 
 describe GrimRepo::User do
   describe "#initialize" do
-    subject { GrimRepo::User.new(fixture('user.json')) }
+    let(:client) { mock(GrimRepo::Client) }
+    subject { GrimRepo::User.new(client, fixture('user.json')) }
 
     it { should_not be_hireable }
     its(:api_url) { should == URI.parse("https://api.github.com/users/octocat") }

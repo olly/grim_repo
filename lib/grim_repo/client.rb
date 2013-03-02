@@ -16,7 +16,7 @@ module GrimRepo
     # @return [User]
     def user
       data = get('/user')
-      User.new(data)
+      User.new(self, data)
     end
 
     # Fetches a user by login name.
@@ -25,7 +25,7 @@ module GrimRepo
     # @return [User, nil]
     def users(login)
       data = get("/users/#{login}")
-      User.new(data)
+      User.new(self, data)
     rescue NotFound
       nil
     end

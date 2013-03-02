@@ -2,8 +2,11 @@ module GrimRepo
   class User
     # Creates a new user with data from the API.
     #
+    # @param client [Client] the client that fetched this user.
     # @param data [Hash] parsed JSON representation from the API.
-    def initialize(data)
+    def initialize(client, data)
+      @client = client
+
       @api_url = parse_uri(data['url'])
       @avatar_url = parse_uri(data['avatar_url'])
       @bio = data['bio']
@@ -68,6 +71,9 @@ module GrimRepo
     end
 
     private
+
+    attr_reader :client
+
     def parse_uri(uri)
       return if uri.nil?
       URI.parse(uri)
