@@ -1,5 +1,8 @@
 module GrimRepo
   class User
+    # Creates a new user with data from the API.
+    #
+    # @param data [Hash] parsed JSON representation from the API.
     def initialize(data)
       @api_url = parse_uri(data['url'])
       @avatar_url = parse_uri(data['avatar_url'])
@@ -17,9 +20,49 @@ module GrimRepo
       @url = parse_uri(data['html_url'])
     end
 
-    attr_reader :api_url, :avatar_url, :bio, :blog, :company, :created_at,
-                :email, :gravatar_id, :id, :location, :login, :name, :url
+    # The URL for the API representaton of the user.
+    # @return [URI]
+    attr_reader :api_url
 
+    # @return [URI]
+    attr_reader :avatar_url
+
+    # @return [String, nil]
+    attr_reader :bio
+
+    # @return [URI, nil]
+    attr_reader :blog
+
+    # @return [String, nil]
+    attr_reader :company
+
+    # @return [Time]
+    attr_reader :created_at
+
+    # @return [String, nil]
+    attr_reader :email
+
+    # @return [String]
+    attr_reader :gravatar_id
+
+    # @return [Fixnum]
+    attr_reader :id
+
+    # @return [String, nil]
+    attr_reader :location
+
+    # @return [String]
+    attr_reader :login
+
+    # @return [String, nil]
+    attr_reader :name
+
+    # The URL for the user's GitHub page.
+    # @return [URI, nil]
+    attr_reader :url
+
+    # Whether the user has checked 'Available for Hire' in their profile.
+    # @return [Boolean]
     def hireable?
       @hireable
     end
