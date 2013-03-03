@@ -18,6 +18,6 @@ describe "fetching repositories", type: :feature, cassette: 'repositories' do
   context "no repositories" do
     let(:user) { client.users('grimrepo') }
 
-    it { subject.any?.should be_false }
+    it { should_not have_any }
   end
 end
