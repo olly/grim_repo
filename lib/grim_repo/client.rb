@@ -1,6 +1,7 @@
 require 'faraday_middleware'
 require 'grim_repo/client/page_links_parser'
 require 'grim_repo/client/status_handler'
+require 'grim_repo/uris'
 
 module GrimRepo
   class Client
@@ -28,8 +29,7 @@ module GrimRepo
     #
     # @return [User]
     def user
-      uri = URI.parse('https://api.github.com/user')
-      data = get(uri)
+      data = get(URIs::AuthenticatedUser)
       User.new(self, data)
     end
 
@@ -38,8 +38,7 @@ module GrimRepo
     # @param login [String] a GitHub username
     # @return [User, nil]
     def users(login)
-      uri = URI.parse("https://api.github.com/users/#{login}")
-      data = get(uri)
+      data = get(URIs::User[login])
       User.new(self, data)
     rescue NotFound
       nil

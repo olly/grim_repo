@@ -8,7 +8,7 @@ module GrimRepo
       @client = client
       @user = user
 
-      @next_uri = URI.parse("https://api.github.com/users/#{user.login}/repos")
+      @next_uri = URIs::UserRepositories[user.login]
 
       super(&iterator)
     end
