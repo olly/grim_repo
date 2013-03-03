@@ -1,4 +1,5 @@
 require 'faraday_middleware'
+require 'grim_repo/client/page_links_parser'
 require 'grim_repo/client/status_handler'
 
 module GrimRepo
@@ -39,6 +40,7 @@ module GrimRepo
         faraday.basic_auth(username, password)
 
         faraday.use FaradayMiddleware::ParseJson
+        faraday.use PageLinksParser
         faraday.use StatusHandler
 
         faraday.adapter Faraday.default_adapter

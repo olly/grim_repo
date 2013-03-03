@@ -27,4 +27,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard", "~> 0.8.5.2"
 
   spec.add_dependency "faraday_middleware", "~> 0.9.0"
+  spec.add_dependency "link_header", "~> 0.0.5"
 end
