@@ -1,3 +1,5 @@
+require 'grim_repo/repositories'
+
 module GrimRepo
   class User
     # Creates a new user with data from the API.
@@ -68,6 +70,13 @@ module GrimRepo
     # @return [Boolean]
     def hireable?
       @hireable
+    end
+
+    # This user's repositories.
+    #
+    # @return [Repositories]
+    def repositories
+      Repositories.new(client, self)
     end
 
     private
