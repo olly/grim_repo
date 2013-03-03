@@ -12,11 +12,24 @@ module GrimRepo
       @username, @password = username, password
     end
 
+    # Runs a GET request on the client's connection.
+    #
+    # @param uri [URI] the URI to fetch
+    # @yieldparam response [Faraday::Response] the reponse
+    # @return [Array, Hash] the parsed JSON response
+    def get(uri)
+      path = [uri.path, uri.query].compact.join('?')
+      response = connection.get(path)
+      yield response if block_given?
+      response.body
+    end
+
     # Fetches the user the client is authenticated as.
     #
     # @return [User]
     def user
-      data = get('/user')
+      uri = URI.parse('https://api.github.com/user')
+      data = get(uri)
       User.new(self, data)
     end
 
@@ -25,7 +38,8 @@ module GrimRepo
     # @param login [String] a GitHub username
     # @return [User, nil]
     def users(login)
-      data = get("/users/#{login}")
+      uri = URI.parse("https://api.github.com/users/#{login}")
+      data = get(uri)
       User.new(self, data)
     rescue NotFound
       nil
@@ -45,11 +59,6 @@ module GrimRepo
 
         faraday.adapter Faraday.default_adapter
       end
-    end
-
-    def get(path)
-      response = connection.get(path)
-      response.body
     end
   end
 end
