@@ -66,6 +66,25 @@ Or fetch them all, which will issue all the necessary HTTP requests to retrieve 
 
     repositories.to_a
 
+### Repository Forks
+
+The forks container is also an [Enumerator][Enumerator] and also handles the pagination transparently.
+
+    repository.forks
+    # => #<Forks:0x007fa6734be800>
+
+We can fetch a number of forks, or get them all.
+
+    repository.forks.take(5)
+    repository.forks.to_a
+
+We can also get the count of the forks without any additional HTTP requests, because the count is included in the repository metadata. 
+
+    repository.forks.count
+    # => 14
+
+_Note:_ if you pass an argument or use the block syntax this optimisation is by-passed and it will have to fetch all the forks from the API.
+
 ### Repository Languages
 
 Fetching the repository's languages is straightforward:
