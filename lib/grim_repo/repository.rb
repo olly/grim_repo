@@ -1,3 +1,4 @@
+require 'grim_repo/forks'
 require 'grim_repo/language'
 require 'grim_repo/uris'
 
@@ -12,6 +13,7 @@ module GrimRepo
 
       @name = data['name']
       @full_name = data['full_name']
+      @forks_count = data['forks_count']
     end
 
     # @return [String]
@@ -19,6 +21,10 @@ module GrimRepo
 
     # @return [String]
     attr_reader :full_name
+
+    def forks
+      Forks.new(client, self, count: forks_count)
+    end
 
     # The programming languages used in the repository.
     #
@@ -33,6 +39,6 @@ module GrimRepo
 
     private
 
-    attr_reader :client
+    attr_reader :client, :forks_count
   end
 end

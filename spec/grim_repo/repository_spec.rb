@@ -12,6 +12,16 @@ describe GrimRepo::Repository, fixtures: true do
     its(:full_name) { should == 'octocat/Hello-World' }
   end
 
+  describe "#forks" do
+    let(:forks) { double('Forks') }
+
+    it "initializes & returns Forks" do
+      GrimRepo::Forks.should_receive(:new).with(client, repository, count: 9).and_return(forks)
+
+      repository.forks.should == forks
+    end
+  end
+
   describe "#languages" do
     let(:languages_uri) { GrimRepo::URIs::RepositoryLanguages['octocat/Hello-World'] }
     let(:languages_data) { { 'Ruby' => 5423, 'Javascript' => 4234 } }
