@@ -25,5 +25,13 @@ describe GrimRepo::Repository, fixtures: true do
     it "returns the language byte count" do
       repository.languages.map(&:bytes).should =~ [4234, 5423]
     end
+
+    it "caches the languages" do
+      client.should_receive(:get).once
+
+      2.times do
+        repository.languages
+      end
+    end
   end
 end

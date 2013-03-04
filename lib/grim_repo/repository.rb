@@ -22,9 +22,11 @@ module GrimRepo
 
     # The programming languages used in the repository.
     #
+    # @note The languages are cached in an instance variable, subsequent calls
+    #   will result in the same results.
     # @return [Array<Language>]
     def languages
-      client.get(URIs::RepositoryLanguages[self.full_name]).map do |name, bytes|
+      @languages ||= client.get(URIs::RepositoryLanguages[self.full_name]).map do |name, bytes|
         Language.new(name, bytes)
       end
     end
