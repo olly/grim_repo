@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>GrimRepo by olly</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>GrimRepo</h1>
+        <p>An idiomatic Ruby wrapper for the GitHub v3 API – for humans, not computers.</p>
+
+        <p class="view"><a href="https://github.com/olly/grim_repo">View the Project on GitHub <small>olly/grim_repo</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/olly/grim_repo/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/olly/grim_repo/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/olly/grim_repo">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>GrimRepo</h1>
+
+<p>An idiomatic Ruby wrapper for the GitHub v3 API – for humans, not computers.</p>
+
+<h2>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'grim_repo'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install grim_repo
+</code></pre>
+
+<h2>Usage</h2>
+
+<h3>The Client</h3>
+
+<p>The Client is the main entry point of the gem. All objects created using a particular client will retain a reference to it and use that for further API calls when accessing related resources.</p>
+
+<pre><code>username, password = 'grimrepo', 'hub'
+client = GrimRepo::Client.new(username, password)
+</code></pre>
+
+<h3>The Client's User</h3>
+
+<p>The Client is performing operations on behalf of a GitHub user.</p>
+
+<pre><code>user = client.user
+# =&gt; #&lt;GitHub::User:0x007fbe52068638&gt;
+
+user.login
+# =&gt; 'grimrepo'
+</code></pre>
+
+<h3>Fetching Other Users</h3>
+
+<p>We can also fetch the details of other individual users.</p>
+
+<pre><code>user = client.users('olly')
+# =&gt; #&lt;GitHub::User:0x007fbe5209b998&gt;
+
+user.login
+# =&gt; 'olly'
+</code></pre>
+
+<h3>Fetching Repositories</h3>
+
+<p>We can fetch the repositories of the client's user or the public repositories of another user.</p>
+
+<pre><code>repositories = client.repositories
+# =&gt; #&lt;Repositories:0x007fa37944e908&gt;
+
+user = client.users('mojombo')
+repositories = user.repositories
+# =&gt; #&lt;Repositories:0x007fbca8ac7328&gt;
+</code></pre>
+
+<p>The container is an <a href="http://www.ruby-doc.org/core-2.0/Enumerator.html">Enumerator</a> which transparently (and lazily) handles the API pagination.</p>
+
+<p>For example, we can fetch the first 10 repositories, resulting in one HTTP request.</p>
+
+<pre><code>repositories.take(10)
+</code></pre>
+
+<p>Or fetch them all, which will issue all the necessary HTTP requests to retrieve all the repositories.</p>
+
+<pre><code>repositories.to_a
+</code></pre>
+
+<h3>Repository Forks</h3>
+
+<p>The forks container is also an <a href="http://www.ruby-doc.org/core-2.0/Enumerator.html">Enumerator</a> and also handles the pagination transparently.</p>
+
+<pre><code>repository.forks
+# =&gt; #&lt;Forks:0x007fa6734be800&gt;
+</code></pre>
+
+<p>We can fetch a number of forks, or get them all.</p>
+
+<pre><code>repository.forks.take(5)
+repository.forks.to_a
+</code></pre>
+
+<p>We can also get the count of the forks without any additional HTTP requests, because the count is included in the repository metadata. </p>
+
+<pre><code>repository.forks.count
+# =&gt; 14
+</code></pre>
+
+<p><em>Note:</em> if you pass an argument or use the block syntax this optimisation is by-passed and it will have to fetch all the forks from the API.</p>
+
+<h3>Repository Languages</h3>
+
+<p>Fetching the repository's languages is straightforward:</p>
+
+<pre><code>repository.languages.each do |language|
+  puts "#{language.name} (#{languate.bytes})"
+end
+</code></pre>
+
+<h2>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol><h3>Running the Tests</h3>
+
+<p>Run the test suite with:</p>
+
+<pre><code>$ rspec
+</code></pre>
+
+<p>There tests in <code>spec/features</code> hit the live API and capture the results using VCR. If you want to run the tests against the live API you'll need to configure some credentials using environment variables:</p>
+
+<pre><code>$ export GRIMREPO_TEST_USERNAME=username
+$ export GRIMREPO_TEST_PASSWORD=password
+$ rspec
+</code></pre>
+
+<h2>The Grim Repo</h2>
+
+<p><img src="http://octodex.github.com/images/grim-repo.jpg" alt="the Grim Repo"></p>
+
+<p>Name inspiration &amp; image from the <a href="http://octodex.github.com/grim-repo">octodex</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/olly">olly</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
