@@ -3,7 +3,7 @@ require 'grim_repo/repository'
 module GrimRepo
   class Repositories < Enumerator
     # @param client [Client] the client to fetch the repositories.
-    # @param client [User] the user whose repositories to fetch.
+    # @param user [User] the user whose repositories to fetch.
     def initialize(client, user)
       @client = client
       @user = user
