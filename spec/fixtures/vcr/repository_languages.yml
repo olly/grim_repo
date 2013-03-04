@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/mojombo/jekyll/languages
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Basic dXNlcm5hbWUtYWI1ZDAxMjUtMjYwYy00MTliLWI1NjgtNGY3MjVkMjA2NTZiOnBhc3N3b3JkLWIxNTc3MTM0LTk4MTEtNDk0MC05NjJhLWNhNTM2MzEyNDdlZA==
+      User-Agent:
+      - Faraday v0.8.6
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - GitHub.com
+      date:
+      - Mon, 04 Mar 2013 15:52:59 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-ratelimit-limit:
+      - '5000'
+      x-ratelimit-remaining:
+      - '4997'
+      vary:
+      - Accept, Authorization, Cookie
+      cache-control:
+      - private, max-age=60, s-maxage=60
+      last-modified:
+      - Mon, 04 Mar 2013 15:36:45 GMT
+      etag:
+      - '"9a1fc4a98345bc304b2490c61e5630b3"'
+      x-github-media-type:
+      - github.beta
+      x-content-type-options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"Ruby":135348,"Shell":25}'
+    http_version: 
+  recorded_at: Mon, 04 Mar 2013 15:53:00 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/mojombo/jekyll/languages
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Basic dXNlcm5hbWUtYWI1ZDAxMjUtMjYwYy00MTliLWI1NjgtNGY3MjVkMjA2NTZiOnBhc3N3b3JkLWIxNTc3MTM0LTk4MTEtNDk0MC05NjJhLWNhNTM2MzEyNDdlZA==
+      User-Agent:
+      - Faraday v0.8.6
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      server:
+      - GitHub.com
+      date:
+      - Mon, 04 Mar 2013 15:52:59 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-ratelimit-limit:
+      - '5000'
+      x-ratelimit-remaining:
+      - '4996'
+      vary:
+      - Accept, Authorization, Cookie
+      cache-control:
+      - private, max-age=60, s-maxage=60
+      last-modified:
+      - Mon, 04 Mar 2013 15:36:45 GMT
+      etag:
+      - '"9a1fc4a98345bc304b2490c61e5630b3"'
+      x-github-media-type:
+      - github.beta
+      x-content-type-options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"Ruby":135348,"Shell":25}'
+    http_version: 
+  recorded_at: Mon, 04 Mar 2013 15:53:01 GMT
+recorded_with: VCR 2.4.0

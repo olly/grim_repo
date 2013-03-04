@@ -66,6 +66,14 @@ Or fetch them all, which will issue all the necessary HTTP requests to retrieve 
 
     repositories.to_a
 
+### Repository Languages
+
+Fetching the repository's languages is straightforward:
+
+    repository.languages.each do |language|
+      puts "#{language.name} (#{languate.bytes})"
+    end
+
 ## Contributing
 
 1. Fork it
