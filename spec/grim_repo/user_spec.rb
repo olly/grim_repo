@@ -1,9 +1,8 @@
 require 'spec_helper'
-require 'json'
 require 'grim_repo/client'
 require 'grim_repo/user'
 
-describe GrimRepo::User do
+describe GrimRepo::User, fixtures: true do
   let(:client) { mock(GrimRepo::Client) }
   let(:user) { GrimRepo::User.new(client, fixture('user.json')) }
 
@@ -24,11 +23,6 @@ describe GrimRepo::User do
     its(:login) { should == 'octocat' }
     its(:name) { should == 'monalisa octocat' }
     its(:url) { should == URI.parse("https://github.com/octocat") }
-  end
-
-  def fixture(filename)
-    file = Pathname.new(__dir__).join('..', 'fixtures', 'data', filename)
-    JSON.parse(file.read)
   end
 
   describe "#repositories" do
