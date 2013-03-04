@@ -13,6 +13,49 @@ describe GrimRepo::Forks do
     end
   end
 
+  describe "#count" do
+    let(:initial_uri) { URI.parse('https://api.github.com/repos/example/test/forks') }
+    let(:response) { double('response', env: {links: {}}) }
+    let(:body) { [] }
+    before { client.stub!(:get).with(initial_uri).and_yield(response).and_return(body) }
+
+    let(:forks) { GrimRepo::Forks.new(client, repository, count: 34) }
+
+    context "without a block or argument" do
+      it "returns the cached count, without a HTTP request" do
+        client.should_not_receive(:get)
+
+        forks.count.should == 34
+      end
+    end
+
+    context "with an argument" do
+      it "fetches the forks" do
+        client.should_receive(:get)
+
+        forks.count('My-Repository')
+      end
+    end
+
+    context "with a block" do
+      it "fetches the forks" do
+        client.should_receive(:get)
+
+        forks.count {|fork| fork.name == 'My-Repository' }
+      end
+    end
+
+    context "with a nil cached count" do
+      let(:forks) { GrimRepo::Forks.new(client, repository) }
+
+      it "fetches the forks" do
+        client.should_receive(:get)
+
+        forks.count
+      end
+    end
+  end
+
   describe "fetching" do
     # Assuming 1 repository per page.
     let(:page1_uri) { URI.parse('https://api.github.com/repos/example/test/forks') }
