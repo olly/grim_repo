@@ -9,4 +9,5 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.include FeatureSetup, type: :feature
+  config.include FixtureSupport, fixtures: true
 end

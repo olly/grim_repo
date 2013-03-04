@@ -1,5 +1,7 @@
 require 'faraday_middleware'
+require 'grim_repo/client/page_links_parser'
 require 'grim_repo/client/status_handler'
+require 'grim_repo/uris'
 
 module GrimRepo
   class Client
@@ -11,11 +13,23 @@ module GrimRepo
       @username, @password = username, password
     end
 
+    # Runs a GET request on the client's connection.
+    #
+    # @param uri [URI] the URI to fetch
+    # @yieldparam response [Faraday::Response] the reponse
+    # @return [Array, Hash] the parsed JSON response
+    def get(uri)
+      path = [uri.path, uri.query].compact.join('?')
+      response = connection.get(path)
+      yield response if block_given?
+      response.body
+    end
+
     # Fetches the user the client is authenticated as.
     #
     # @return [User]
     def user
-      data = get('/user')
+      data = get(URIs::AuthenticatedUser)
       User.new(self, data)
     end
 
@@ -24,7 +38,7 @@ module GrimRepo
     # @param login [String] a GitHub username
     # @return [User, nil]
     def users(login)
-      data = get("/users/#{login}")
+      data = get(URIs::User[login])
       User.new(self, data)
     rescue NotFound
       nil
@@ -39,15 +53,11 @@ module GrimRepo
         faraday.basic_auth(username, password)
 
         faraday.use FaradayMiddleware::ParseJson
+        faraday.use PageLinksParser
         faraday.use StatusHandler
 
         faraday.adapter Faraday.default_adapter
       end
-    end
-
-    def get(path)
-      response = connection.get(path)
-      response.body
     end
   end
 end

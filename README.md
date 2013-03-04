@@ -45,6 +45,27 @@ We can also fetch the details of other individual users.
     user.login
     # => 'olly'
 
+### Fetching Repositories
+
+We can fetch the repositories of the client's user or the public repositories of another user.
+
+    repositories = client.repositories
+    # => #<Repositories:0x007fa37944e908>
+
+    user = client.users('mojombo')
+    repositories = user.repositories
+    # => #<Repositories:0x007fbca8ac7328>
+
+The container is an [Enumerator][Enumerator] which transparently (and lazily) handles the API pagination.
+
+For example, we can fetch the first 10 repositories, resulting in one HTTP request.
+
+    repositories.take(10)
+
+Or fetch them all, which will issue all the necessary HTTP requests to retrieve all the repositories.
+
+    repositories.to_a
+
 ## Contributing
 
 1. Fork it
@@ -64,3 +85,5 @@ There tests in `spec/features` hit the live API and capture the results using VC
     $ export GRIMREPO_TEST_USERNAME=username
     $ export GRIMREPO_TEST_PASSWORD=password
     $ rspec
+    
+[Enumerator]: http://www.ruby-doc.org/core-2.0/Enumerator.html
