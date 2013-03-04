@@ -1,3 +1,4 @@
+require 'time'
 require 'grim_repo/repositories'
 
 module GrimRepo
