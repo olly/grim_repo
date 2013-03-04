@@ -113,4 +113,9 @@ There tests in `spec/features` hit the live API and capture the results using VC
     $ export GRIMREPO_TEST_PASSWORD=password
     $ rspec
     
+## The Grim Repo
+![the Grim Repo](http://octodex.github.com/images/grim-repo.jpg)
+
+Name inspiration & image from the [octodex](http://octodex.github.com/grim-repo).
+
 [Enumerator]: http://www.ruby-doc.org/core-2.0/Enumerator.html
